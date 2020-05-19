@@ -10,12 +10,10 @@ namespace UberClone.Droid
 #else
 	[Application(Debuggable = false)]
 #endif
-	[MetaData("com.google.android.maps.v2.API_KEY",
-			  Value = Constants.GoogleMapsApiKey)]
+	[MetaData("com.google.android.maps.v2.API_KEY", Value = Constants.GoogleMapsApiKey)]
 	public class MainApplication : Application
 	{
-		public MainApplication(IntPtr handle, JniHandleOwnership transer)
-		  : base(handle, transer)
+		public MainApplication(IntPtr handle, JniHandleOwnership transer) : base(handle, transer)
 		{
 		}
 

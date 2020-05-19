@@ -12,7 +12,7 @@ using ImageCircle.Forms.Plugin.Droid;
 
 namespace UberClone.Droid
 {
-    [Activity(Label = "xUber", Icon = "@mipmap/icon", Theme = "@style/SplashTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Panne", Icon = "@mipmap/icon", Theme = "@style/SplashTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -29,7 +29,6 @@ namespace UberClone.Droid
             CardsViewRenderer.Preserve();
             UserDialogs.Init(() => this);
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState); // initialize for 
-
 
             LoadApplication(new App());
         }

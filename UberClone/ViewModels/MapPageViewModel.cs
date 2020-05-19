@@ -129,6 +129,7 @@ namespace UberClone.ViewModels
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.ToString());
                 await UserDialogs.Instance.AlertAsync("Error", "Unable to get actual location", "Ok");
             }
         }
