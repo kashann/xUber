@@ -180,8 +180,6 @@ namespace UberClone.ViewModels
             var googleDirection = await googleMapsApi.GetDirections($"{OriginCoordinates.Latitude}", $"{OriginCoordinates.Longitude}", $"{DestinationCoordinates.Latitude}", $"{DestinationCoordinates.Longitude}");
             if (googleDirection.Routes != null && googleDirection.Routes.Count > 0)
             {
-               
-
                 var positions = (Enumerable.ToList(PolylineHelper.Decode(googleDirection.Routes.First().OverviewPolyline.Points)));
                 DrawRouteCommand.Execute(positions);
             }
@@ -189,7 +187,6 @@ namespace UberClone.ViewModels
             {
                 ChangePageStatusCommand.Execute(PageStatusEnum.Default);
                 await UserDialogs.Instance.AlertAsync(":(", "No route found", "Ok");
-               
             }
         }
 

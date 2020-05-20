@@ -170,7 +170,9 @@
     <AndroidResource Include="Resources\drawable\splashscreen.xml" />
     <AndroidResource Include="Resources\drawable\logo.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_car_s.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UberClone\UberClone.csproj">
       <Project>{0CDD0170-05C2-4B8E-88C1-58CCB297C841}</Project>
@@ -181,6 +183,24 @@
     <AndroidAsset Include="Assets\ic_pickuplocation.png" />
     <AndroidAsset Include="Assets\ic_car.png" />
     <AndroidAsset Include="Assets\ic_circle_point.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-ldpi\ic_car_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_car_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_car_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_car_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_car_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\ic_car_s.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
