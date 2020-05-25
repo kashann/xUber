@@ -20,62 +20,59 @@
               Grid.RowSpan="2"
               ColumnSpacing="0"
               RowSpacing="0">
-                  <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-                    <maps:Map x:Name="map"
-                              Grid.Row="0"
-                              CameraIdled="Handle_CameraIdled"
-                              PinClicked="Map_PinClicked"
-                             
-                              HorizontalOptions="FillAndExpand"/>
-            
-                    <local:RecentPlaceView  
-                 Grid.Row="1"
-                                    IsVisible="false">
-                   <local:RecentPlaceView.Triggers>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <maps:Map x:Name="map"
+                            Grid.Row="0"
+                            CameraIdled="Handle_CameraIdled"
+                            PinClicked="Map_PinClicked"
+                            HorizontalOptions="FillAndExpand"/>
+
+            <local:RecentPlaceView Grid.Row="1"
+                                   IsVisible="false">
+                <local:RecentPlaceView.Triggers>
                     <DataTrigger TargetType="local:RecentPlaceView"
                                  Binding="{Binding PageStatusEnum}"
                                  Value="Default">
-                         <Setter Property="IsVisible" Value="True"/>
+                        <Setter Property="IsVisible" Value="True"/>
                     </DataTrigger>
                 </local:RecentPlaceView.Triggers>
-                 </local:RecentPlaceView>
+            </local:RecentPlaceView>
             
-                  <local:PriceView IsVisible="false"
-                                    Grid.Row="1">
-                      <local:PriceView.Triggers>
-                            <DataTrigger TargetType="local:PriceView"
-                                         Binding="{Binding PageStatusEnum}"
-                                         Value="ShowingRoute">
-                                 <Setter Property="IsVisible" Value="True"/>
-                            </DataTrigger>
-                        </local:PriceView.Triggers>
-                   </local:PriceView>
+            <local:PriceView IsVisible="false"
+                             Grid.Row="1">
+                <local:PriceView.Triggers>
+                    <DataTrigger TargetType="local:PriceView"
+                                 Binding="{Binding PageStatusEnum}"
+                                 Value="ShowingRoute">
+                        <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                </local:PriceView.Triggers>
+            </local:PriceView>
         </Grid>
-        
-        
+
         <Image Source="ic_back"
                VerticalOptions="Start"
                HorizontalOptions="Start"
                IsVisible="false"
                x:Name="backButton"
                Margin="20,20,20,0"
-              HeightRequest="30"
-              WidthRequest="30"
-              Grid.Row="0"
-              Grid.RowSpan="2">
-              <Image.Triggers>
+               HeightRequest="30"
+               WidthRequest="30"
+               Grid.Row="0"
+               Grid.RowSpan="2">
+            <Image.Triggers>
                 <DataTrigger TargetType="Image"
                              Binding="{Binding PageStatusEnum}"
                              Value="ShowingRoute">
-                     <Setter Property="IsVisible" Value="True"/>
+                    <Setter Property="IsVisible" Value="True"/>
                 </DataTrigger>
             </Image.Triggers>
             <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ChangePageStatusCommand}"
-                                          CommandParameter="{x:Static enumVal:PageStatusEnum.Default}"/>
+                <TapGestureRecognizer Command="{Binding ChangePageStatusCommand}"
+                                      CommandParameter="{x:Static enumVal:PageStatusEnum.Default}"/>
                 </Image.GestureRecognizers>
         </Image>
         
@@ -97,7 +94,7 @@
                 </DataTrigger>
             </Image.Triggers>
             <Image.GestureRecognizers>
-               <TapGestureRecognizer Tapped="Handle_Tapped"/>
+                <TapGestureRecognizer Tapped="Handle_Tapped"/>
             </Image.GestureRecognizers>
         </Image>
         
@@ -129,27 +126,26 @@
                 </DataTrigger>
             </Image.Triggers>
          </Image>
-       
-        
-           <Button Text="DONE"
-                   IsVisible="false"
-                   BackgroundColor="Black"
-                   Margin="40"
-                   Clicked="OnDoneClicked"
-                   Command="{Binding ChooseLocationCommand}"
-                   CommandParameter="{Binding Path=CameraPosition.Target,Source={x:Reference map}}"
-                   x:Name="chooseLocationButton"
-                   TextColor="White"
-                   FontSize="17"
-                   VerticalOptions="EndAndExpand"
-                   HorizontalOptions="FillAndExpand"
-                   Grid.Row="0"
-                   Grid.RowSpan="2">
+
+        <Button Text="DONE"
+                IsVisible="false"
+                BackgroundColor="Black"
+                Margin="40"
+                Clicked="OnDoneClicked"
+                Command="{Binding ChooseLocationCommand}"
+                CommandParameter="{Binding Path=CameraPosition.Target,Source={x:Reference map}}"
+                x:Name="chooseLocationButton"
+                TextColor="White"
+                FontSize="17"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Grid.Row="0"
+                Grid.RowSpan="2">
             <Button.Triggers>
                 <DataTrigger TargetType="Button"
                              Binding="{Binding PageStatusEnum}"
                              Value="Searching">
-                     <Setter Property="IsVisible" Value="True"/>
+                    <Setter Property="IsVisible" Value="True"/>
                 </DataTrigger>
             </Button.Triggers>
          </Button>

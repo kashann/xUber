@@ -19,9 +19,7 @@ namespace UberClone.ViewModels
     public class MapPageViewModel : INotifyPropertyChanged
     {
         IGoogleMapsApiService googleMapsApi = new GoogleMapsApiService();
-
         public PageStatusEnum PageStatusEnum { get; set; }
-
         public ICommand DrawRouteCommand { get; set; }
         public ICommand GetPlacesCommand { get; set; }
         public ICommand GetUserLocationCommand { get; set; }
@@ -35,10 +33,23 @@ namespace UberClone.ViewModels
 
         public ObservableCollection<GooglePlaceAutoCompletePrediction> Places { get; set; }
         public ObservableCollection<GooglePlaceAutoCompletePrediction> RecentPlaces { get; set; }
-        public GooglePlaceAutoCompletePrediction RecentPlace1 {get;set;}
+        public GooglePlaceAutoCompletePrediction RecentPlace1 { get; set; }
         public GooglePlaceAutoCompletePrediction RecentPlace2 { get; set; }
         public ObservableCollection<PriceOption> PriceOptions { get; set; }
         public PriceOption PriceOptionSelected { get; set; }
+
+        public string Hello { get; set; }
+
+        int _currentIndex;
+        public int CurrentIndex
+        {
+            get => _currentIndex;
+            set
+            {
+                _currentIndex = value;
+                PriceOptionSelected = PriceOptions[CurrentIndex];
+            }
+        }
 
         public string PickupLocation { get; set; }
 
@@ -48,16 +59,13 @@ namespace UberClone.ViewModels
         string _destinationLocation;
         public string DestinationLocation
         {
-            get
-            {
-                return _destinationLocation;
-            }
+            get => _destinationLocation;
             set
             {
                 _destinationLocation = value;
                 if (!string.IsNullOrEmpty(_destinationLocation))
                 {
-                    GetPlacesCommand.Execute(_destinationLocation);
+                   GetPlacesCommand.Execute(_destinationLocation);
                 }
             }
         }
@@ -65,10 +73,7 @@ namespace UberClone.ViewModels
         GooglePlaceAutoCompletePrediction _placeSelected;
         public GooglePlaceAutoCompletePrediction PlaceSelected
         {
-            get
-            {
-                return _placeSelected;
-            }
+            get => _placeSelected;
             set
             {
                 _placeSelected = value;
@@ -93,7 +98,7 @@ namespace UberClone.ViewModels
                       CleanPolylineCommand.Execute(null);
                       GetUserLocationCommand.Execute(null);
                       DestinationLocation = string.Empty;
-                  }else if(PageStatusEnum== PageStatusEnum.Searching)
+                  } else if (PageStatusEnum == PageStatusEnum.Searching)
                   {
                       Places = new ObservableCollection<GooglePlaceAutoCompletePrediction>(RecentPlaces);
                   }
@@ -101,11 +106,20 @@ namespace UberClone.ViewModels
 
             ChooseLocationCommand = new Command<Position>((param) =>
             {
-                if(PageStatusEnum== PageStatusEnum.Searching)
+                if(PageStatusEnum == PageStatusEnum.Searching)
                 {
                     GetLocationNameCommand.Execute(param);
                 }
             });
+
+            DateTime now = DateTime.Now;
+            if (now.Hour < 13)
+                Hello = "Good morning, ";
+            else if (now.Hour >= 13 && now.Hour < 17)
+                Hello = "Good afternoon, ";
+            else if (now.Hour >= 17 && now.Hour < 24)
+                Hello = "Good evening, ";
+            Hello += User.ShortName;
 
             FillRecentPlacesList();
             FillPriceOptions();
@@ -117,7 +131,7 @@ namespace UberClone.ViewModels
             try
             {
                 await Task.Yield();
-                var request = new GeolocationRequest(GeolocationAccuracy.High,TimeSpan.FromSeconds(5000));
+                var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(5000));
                 var location = await Geolocation.GetLocationAsync(request);
 
                 if (location != null)
@@ -140,8 +154,7 @@ namespace UberClone.ViewModels
             try
             {
                 var placemarks = await Geocoding.GetPlacemarksAsync(position.Latitude, position.Longitude);
-                PickupLocation = placemarks?.FirstOrDefault()?.FeatureName;
-                
+                PickupLocation = placemarks?.FirstOrDefault()?.Thoroughfare;
             }
             catch (Exception ex)
             {
@@ -194,9 +207,9 @@ namespace UberClone.ViewModels
         {
             RecentPlaces = new ObservableCollection<GooglePlaceAutoCompletePrediction>()
             {
-                {new GooglePlaceAutoCompletePrediction(){ PlaceId="ChIJq0wAE_CJr44RtWSsTkp4ZEM", StructuredFormatting=new StructuredFormatting(){ MainText="Random Place", SecondaryText="Paseo de los locutores #32" } } },
-                {new GooglePlaceAutoCompletePrediction(){ PlaceId="ChIJq0wAE_CJr44RtWSsTkp4ZEM", StructuredFormatting=new StructuredFormatting(){ MainText="Green Tower", SecondaryText="Ensanche Naco #4343, Green 232" } } },
-                {new GooglePlaceAutoCompletePrediction(){ PlaceId="ChIJm02ImNyJr44RNs73uor8pFU", StructuredFormatting=new StructuredFormatting(){ MainText="Tienda Aurora", SecondaryText="Rafael Augusto Sanchez" } } },
+                {new GooglePlaceAutoCompletePrediction(){ PlaceId="ChIJjQ4mfFL_sUAREGCHYsdsNQU", StructuredFormatting=new StructuredFormatting(){ MainText="Academia de Studii Economice din București", SecondaryText="Piața Romană 6" } } },
+                {new GooglePlaceAutoCompletePrediction(){ PlaceId="ChIJs64X4oH4sUAR88atRxH-ww8", StructuredFormatting=new StructuredFormatting(){ MainText="Pipera Metro Station", SecondaryText="Bulevardul Dimitrie Pompeiu" } } },
+                {new GooglePlaceAutoCompletePrediction(){ PlaceId="ChIJMQNHJu0BskARxnQnYcO9P2A", StructuredFormatting=new StructuredFormatting(){ MainText="Complex Studențesc Belvedere ASE", SecondaryText="Strada Chibzuinței 2" } } },
             };
 
             RecentPlace1 = RecentPlaces[0];
@@ -208,17 +221,40 @@ namespace UberClone.ViewModels
         {
             PriceOptions = new ObservableCollection<PriceOption>()
             {
-                {new PriceOption(){ Tag="xUBERX", Category="Economy", CategoryDescription="Affortable, everyday rides", PriceDetails=new System.Collections.Generic.List<PriceDetail>(){
-                    { new PriceDetail(){ Type="xUber X", Price=332, ArrivalETA="12:00pm", Icon="https://d1ic4altzx8ueg.cloudfront.net/finder-au/wp-uploads/2019/01/uber-melbourne-new-1.jpg" } },
-                  { new PriceDetail(){ Type="xUber Black", Price=150, ArrivalETA="12:40pm", Icon="https://d1ic4altzx8ueg.cloudfront.net/finder-au/wp-uploads/2019/01/uber-melbourne-new-2.jpg" } }}
-                 } },
-                {new PriceOption(){Tag="xUBERXL", Category="Extra Seats", CategoryDescription="Affortable rides for group up to 6" ,  PriceDetails=new System.Collections.Generic.List<PriceDetail>(){
-                    { new PriceDetail(){ Type="xUber XL", Price=332, ArrivalETA="12:00pm", Icon="https://d1ic4altzx8ueg.cloudfront.net/finder-au/wp-uploads/2019/01/uber-melbourne-new-2.jpg" } }
-                  } } }
+                { new PriceOption() { Tag = "PanneX", Category = "Panne X", CategoryDescription = "Affortable, everyday towing", 
+                    PriceDetails = new System.Collections.Generic.List<PriceDetail>() {
+                        { new PriceDetail() { Type = "On-Site repair", Price = 150, ArrivalETA = EtaPlus(15), Icon = "panner.png" } },
+                        { new PriceDetail() { Type = "Normal", Price = 180, ArrivalETA = EtaPlus(25), Icon = "pannex.jpg" } }
+                    }
+                } },
+                { new PriceOption() { Tag = "PanneXL", Category = "Panne XL", CategoryDescription = "Affortable towing for big trucks",
+                    PriceDetails = new System.Collections.Generic.List<PriceDetail>() {
+                        { new PriceDetail() { Type = "Truck", Price = 240, ArrivalETA = EtaPlus(35), Icon = "pannex.jpg" } }
+                    } 
+                } },
+                { new PriceOption() { Tag = "PanneS", Category = "Panne S", CategoryDescription = "Towing low cars", 
+                    PriceDetails = new System.Collections.Generic.List<PriceDetail>() {
+                        { new PriceDetail() { Type = "Sports", Price = 280, ArrivalETA = EtaPlus(30), Icon = "pannes.jpg" } },
+                        { new PriceDetail() { Type = "Exotic", Price = 400, ArrivalETA = EtaPlus(45), Icon = "pannes.jpg" } }
+                    }
+                } }
             };
-            PriceOptionSelected = PriceOptions.First();
+            PriceOptionSelected = PriceOptions[CurrentIndex];
 
         }
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private string EtaPlus(int minutes)
+        {
+            DateTime time = DateTime.Now.AddMinutes(minutes);
+            if(time.Hour > 9 && time.Minute > 9)
+                return time.Hour + ":" + time.Minute;
+            else if(time.Hour <= 9 && time.Minute <= 9)
+                return "0" + time.Hour + ":0" + time.Minute;
+            else if(time.Hour <= 9 && time.Minute > 9)
+                return "0" + time.Hour + ":" + time.Minute;
+            else
+                return time.Hour + ":0" + time.Minute;
+        }
     }
 }
