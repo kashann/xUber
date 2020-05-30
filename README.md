@@ -1,7 +1,5 @@
-# xUber
-Uber Clone using Xamarin Forms
-
-Blog post: [Introducing xUber  - Uber Clone using Xamarin Forms](https://www.xamboy.com/2019/07/03/introducing-xuber-uber-clone-using-xamarin-forms)
+# Panne
+Panne mobile app using Xamarin Forms
 
 To test replace the **GoogleMapsApiKey** to use your own Google Maps Api Key in Constants.cs 
 
@@ -10,11 +8,13 @@ To test replace the **GoogleMapsApiKey** to use your own Google Maps Api Key in 
 </p>
 
 ## Screenshots
-<img width="600" src="Screenshots/screenshot1.png" />
-<img width="600" src="Screenshots/screenshot2.png"/>
-<img width="600" src="Screenshots/screenshot3.png" />
-<img width="600" src="Screenshots/screenshot4.png" />
-<img width="600" src="Screenshots/screenshot5.png" "/>
+<img width="600" src="Screenshots/screenshot1.jpg" />
+<img width="600" src="Screenshots/screenshot2.jpg"/>
+<img width="600" src="Screenshots/screenshot3.jpg" />
+<img width="600" src="Screenshots/screenshot4.jpg" />
+<img width="600" src="Screenshots/screenshot5.jpg" />
+<img width="600" src="Screenshots/screenshot6.jpg" />
+<img width="600" src="Screenshots/screenshot7.jpg" />
 
 
 
