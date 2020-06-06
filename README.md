@@ -35,5 +35,5 @@ https://github.com/AndreiMisiukevich/CardView
 
 - **Xam.Plugins.Forms.ImageCircle** - Circle Images for your Xamarin.Forms Applications. https://github.com/jamesmontemagno/ImageCirclePlugin
 
-- **Icon8 Icons** - Free design resources sand software.       
+- **Icon8 Icons** - Free design resources and software.       
 https://icons8.com/
